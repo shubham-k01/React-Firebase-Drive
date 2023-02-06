@@ -17,11 +17,11 @@ export default function FolderBreadcrumbs({currentFolder}) {
       return (<BreadcrumbItem 
       key={folder.id}
       linkAs={Link}
-      linkProps={{
-        to:{
-          pathname:folder.id?`/folder/${folder.id}`:'/',
-          state:{folder:{...folder,path:path.slice(1,index)}}
-        }
+      linkProps=
+      {{
+        to:folder.id?`/folder/${folder.id}`:'/',
+        // setting path  so that it matches the path of the folder that we are redirecting to
+        state:{...folder,path:path.slice(1,index)}
       }}
       className='text-truncate d-inline-block'
       style={{maxWidth:'150px'}}>

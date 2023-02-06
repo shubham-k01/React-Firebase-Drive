@@ -36,7 +36,8 @@ function reducer(state,{type,payload}){
     }
 }
 
-export const useFolder = ( folderId = null,folder =null)=>{
+// firebase does not work with undefined so we make the parameters null by default
+export function useFolder(folderId = null,folder =null){
     const [state,dispatch] = useReducer(reducer,{
         folder,
         folderId,
@@ -48,7 +49,11 @@ export const useFolder = ( folderId = null,folder =null)=>{
 
     // we just to reset everything when we select a new folder
     useEffect(() => {
-      dispatch({type:ACTIONS.SELECT_FOLDER,payload:{folder,folderId}})
+        if(folder==null){
+            return dispatch({type:ACTIONS.UPDATE_FOLDER,payload:{folder:ROOT_FOLDER}})
+            
+        }
+        dispatch({type:ACTIONS.SELECT_FOLDER,payload:{folderId,folder}})
     }, [folder,folderId])
 
     // we are passing folder as well because we can prepopulate our breadcrumbs and the names of different files or otherwise just using folderId we would have to wait for the folder to load entirely
